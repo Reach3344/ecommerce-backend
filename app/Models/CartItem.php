@@ -4,17 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Review extends Model
+class CartItem extends Model
 {
-    protected $fillable = [
-        'user_id',
-        'product_id',
-        'rating',
-        'comment',
-    ];
+    protected $fillable = ['user_id', 'product_id', 'quantity'];
 
     protected $casts = [
-        'rating' => 'integer',
+        'quantity' => 'integer',
     ];
 
     public function user()
