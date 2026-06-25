@@ -12,7 +12,7 @@
             <a href="{{ route('dashboard') }}" class="p-2 hover:bg-gray-700 rounded">Dashboard</a>
             <a href="{{ route('categories.index') }}" class="p-2 hover:bg-gray-700 rounded">Categories</a>
             <a href="{{ route('products.index') }}" class="p-2 hover:bg-gray-700 rounded">Products</a>
-            <form action="{{ route('logout') }}" method="POST" class="pt-4 border-t border-gray-700">
+            <form action="{{ route('logout') }}" method="POST" class="pt-4 border-t border-gray-700" onsubmit="return confirm('Are you sure you want to logout?')">
                 @csrf
                 <button type="submit" class="w-full text-left p-2 text-red-400 hover:bg-gray-700 rounded">Logout</button>
             </form>

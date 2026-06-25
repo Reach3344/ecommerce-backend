@@ -14,7 +14,7 @@ class CheckoutController extends Controller
     {
         $data = $request->validate([
             'shipping_name' => ['required', 'string', 'max:255'],
-            'shipping_email' => ['required', 'email', 'max:255'],
+            'shipping_email' => ['nullable', 'email', 'max:255'],
             'shipping_phone' => ['nullable', 'string', 'max:50'],
             'shipping_address' => ['required', 'string'],
             'notes' => ['nullable', 'string'],

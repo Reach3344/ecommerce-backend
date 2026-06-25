@@ -15,7 +15,7 @@
             <a href="{{ route('admin.products.index') }}" class="p-2 hover:bg-gray-700 rounded">Products</a>
             <a href="{{ route('admin.orders.index') }}" class="p-2 hover:bg-gray-700 rounded">Orders</a>
             <a href="{{ route('admin.users.index') }}" class="p-2 hover:bg-gray-700 rounded">Users</a>
-            <form action="{{ route('logout') }}" method="POST" class="pt-4 border-t border-gray-700">
+            <form action="{{ route('logout') }}" method="POST" class="pt-4 border-t border-gray-700" onsubmit="return confirm('Are you sure you want to logout?')">
                 @csrf
                 <button type="submit" class="w-full text-left p-2 text-red-400 hover:bg-gray-700 rounded">Logout</button>
             </form>
