@@ -3,7 +3,22 @@
 @section('content')
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Order #{{ $order->id }}</h2>
-        <a href="{{ route('admin.orders.index') }}" class="bg-gray-200 px-4 py-2 rounded">Back</a>
+        <div class="flex items-center gap-3">
+            @if($order->status === 'pending')
+                <form action="{{ route('admin.orders.approve', $order) }}" method="POST" onsubmit="return confirm('Approve this order and deduct stock?')">
+                    @csrf
+                    <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                        Approve Order
+                    </button>
+                </form>
+            @endif
+            <a href="{{ route('admin.orders.index') }}" class="bg-gray-200 px-4 py-2 rounded">Back</a>
+        </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <h3 class="font-semibold mb-3">Status</h3>
+        <p>{{ ucfirst($order->status) }}</p>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">

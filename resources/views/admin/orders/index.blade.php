@@ -13,6 +13,7 @@
                     <th class="p-4">Status</th>
                     <th class="p-4">Total</th>
                     <th class="p-4">Date</th>
+                    <th class="p-4">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,10 +25,22 @@
                         <td class="p-4">{{ ucfirst($order->status) }}</td>
                         <td class="p-4">${{ number_format($order->total, 2) }}</td>
                         <td class="p-4">{{ $order->created_at->format('Y-m-d') }}</td>
+                        <td class="p-4">
+                            @if($order->status === 'pending')
+                                <form action="{{ route('admin.orders.approve', $order) }}" method="POST" onsubmit="return confirm('Approve this order and deduct stock?')">
+                                    @csrf
+                                    <button type="submit" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">
+                                        Approve
+                                    </button>
+                                </form>
+                            @else
+                                <span class="text-gray-500">Approved</span>
+                            @endif
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td class="p-4 text-gray-500" colspan="6">No orders yet.</td>
+                        <td class="p-4 text-gray-500" colspan="7">No orders yet.</td>
                     </tr>
                 @endforelse
             </tbody>

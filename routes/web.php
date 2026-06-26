@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Models\Category;
 use App\Models\Order;
@@ -41,6 +42,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/orders/{order}', fn (Order $order) => view('admin.orders.show', [
         'order' => $order->load(['user', 'items.product']),
     ]))->name('orders.show');
+    Route::post('/orders/{order}/approve', [OrderController::class, 'approve'])->name('orders.approve');
     Route::get('/users', fn () => view('admin.users.index', [
         'users' => User::latest()->paginate(15),
     ]))->name('users.index');
