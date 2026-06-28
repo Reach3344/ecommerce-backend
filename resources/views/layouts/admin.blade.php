@@ -23,6 +23,7 @@
                         ['label' => 'Products', 'route' => 'admin.products.index', 'match' => 'admin.products.*'],
                         ['label' => 'Orders', 'route' => 'admin.orders.index', 'match' => 'admin.orders.*'],
                         ['label' => 'Users', 'route' => 'admin.users.index', 'match' => 'admin.users.*'],
+                        ['label' => 'Profile', 'route' => 'admin.profile.edit', 'match' => 'admin.profile.*'],
                     ];
                 @endphp
 
@@ -59,9 +60,15 @@
                             <p class="text-sm font-semibold text-slate-900">{{ auth()->user()->name }}</p>
                             <p class="text-xs text-slate-500">{{ auth()->user()->email }}</p>
                         </div>
-                        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
-                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                        </div>
+                        <a href="{{ route('admin.profile.edit') }}" class="block rounded-full ring-offset-2 transition hover:ring-2 hover:ring-emerald-500" aria-label="Edit profile">
+                            @if(auth()->user()->profile_image_url)
+                                <img src="{{ auth()->user()->profile_image_url }}" alt="{{ auth()->user()->name }}" class="h-10 w-10 rounded-full object-cover">
+                            @else
+                                <div class="flex h-10 w-10 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                </div>
+                            @endif
+                        </a>
                     </div>
                 </div>
             </header>

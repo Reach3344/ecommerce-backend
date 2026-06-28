@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -34,6 +35,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         ]);
     })->name('dashboard');
 
+    Route::get('/profile', [AdminProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [AdminProfileController::class, 'update'])->name('profile.update');
+
     Route::resource('categories', CategoryController::class)->except(['show']);
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('/orders', fn () => view('admin.orders.index', [
@@ -46,4 +50,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/users', fn () => view('admin.users.index', [
         'users' => User::latest()->paginate(15),
     ]))->name('users.index');
+    Route::get('/users/{user}', fn (User $user) => view('admin.users.show', [
+        'user' => $user->load([
+            'cartItems.product',
+            'wishlistItems.product',
+            'orders' => fn ($query) => $query->with('items.product')->latest(),
+        ]),
+    ]))->name('users.show');
 });
