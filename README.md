@@ -63,7 +63,17 @@ A Laravel 12 ecommerce backend with a Sanctum-powered API for customers and a Bl
    php artisan storage:link
    ```
 
-7. Start the app:
+7. Configure Telegram order notifications in `.env`:
+
+   ```env
+   TELEGRAM_NOTIFICATIONS_ENABLED=true
+   TELEGRAM_BOT_TOKEN=your_bot_token_from_botfather
+   TELEGRAM_CHAT_ID=your_telegram_chat_id
+   ```
+
+   Create a bot with Telegram BotFather, send your bot one message from the Telegram account or chat that should receive order alerts, then use Telegram `getUpdates` to find the `chat.id`. A `t.me` profile link such as `https://t.me/reach_db_rtk` is not enough for direct bot messages unless you use the actual chat id.
+
+8. Start the app:
 
    ```bash
    composer run dev

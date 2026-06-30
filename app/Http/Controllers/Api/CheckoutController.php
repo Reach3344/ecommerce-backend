@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Services\TelegramOrderNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class CheckoutController extends Controller
 {
+    public function __construct(private readonly TelegramOrderNotifier $telegramOrderNotifier) {}
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -54,6 +58,17 @@ class CheckoutController extends Controller
             return $order;
         });
 
-        return response()->json($order->load('items.product'), 201);
+        $order->load('items.product');
+
+        try {
+            $this->telegramOrderNotifier->sendOrderCreated($order);
+        } catch (\Throwable $exception) {
+            Log::warning('Unable to send Telegram order notification.', [
+                'order_id' => $order->id,
+                'message' => $exception->getMessage(),
+            ]);
+        }
+
+        return response()->json($order, 201);
     }
 }
