@@ -39,6 +39,15 @@ return [
         'bot_token' => env('TELEGRAM_BOT_TOKEN'),
         'chat_id' => env('TELEGRAM_CHAT_ID'),
         'enabled' => env('TELEGRAM_NOTIFICATIONS_ENABLED', true),
+        // Optional path to a CA bundle file (cacert.pem). If provided, the HTTP client
+        // will use this path to verify TLS. Example: C:\\xampp\\php\\cacert.pem
+        'ca_cert' => env('TELEGRAM_CA_CERT', null),
     ],
+
+    'google' => [
+    'client_id' => env('GOOGLE_CLIENT_ID'),
+    'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+    'redirect' => env('GOOGLE_REDIRECT_URI'),
+],
 
 ];

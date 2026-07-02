@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ReviewController;
+use App\Http\Controllers\Api\TelegramController;
 use App\Http\Controllers\Api\WishlistController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::get('/products/{product}/reviews', [ReviewController::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login/google', [AuthController::class, 'loginWithGoogle']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
@@ -35,6 +37,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/cart/{cartItem}', [CartController::class, 'destroy']);
 
     Route::post('/checkout', [CheckoutController::class, 'store']);
+    Route::post('/telegram/test', [TelegramController::class, 'test']);
     Route::get('/orders', [OrderController::class, 'index']);
     Route::get('/orders/{order}', [OrderController::class, 'show']);
 
